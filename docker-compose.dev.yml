@@ -1,0 +1,36 @@
+services:
+  # Base de datos PostgreSQL
+  db:
+    image: postgres:16
+    container_name: postgres_example
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: laravel
+    ports:
+      - "5432:5432"
+
+  # Aplicación Laravel con Nginx + PHP-FPM
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    restart: always
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor          #volumen para vendor
+      - /var/www/html/node_modules    #volumen node_modules
+    ports:
+      - "8080:80"
+    environment:
+      # Conexión a PostgreSQL
+      - DB_CONNECTION=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=laravel
+      - DB_USERNAME=user
+      - DB_PASSWORD=1234
+    depends_on:
+      - db
