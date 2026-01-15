@@ -13,9 +13,7 @@ services:
 
   # Aplicación Laravel con Nginx + PHP-FPM
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: laravel_app
     restart: always
     volumes:
