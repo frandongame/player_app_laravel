@@ -14,6 +14,9 @@ ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 
+# AQUÍ LE INDICAS QUE TOME LA MEMORIA QUE NECESITE (Ilimitada)
+ENV PHP_MEM_LIMIT -1
+
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
