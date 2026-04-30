@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\PlayerApiController;
-use App\Http\Controllers\PlayerController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\PlayerApiController;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/player',[PlayerApiController::class, "list"]);
+// Forma corta: crea automáticamente 5 rutas API (sin create y edit)
+Route::apiResource('players', PlayerApiController::class);
