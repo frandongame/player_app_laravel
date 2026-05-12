@@ -1,21 +1,20 @@
-FROM serversideup/php:8.2-fpm-nginx
+FROM richarvey/nginx-php-fpm:latest
+
+COPY . .
+
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
 
 # Laravel config
-ENV APP_ENV=production
-ENV APP_DEBUG=false
-ENV LOG_CHANNEL=stderr
+ENV APP_ENV production
+ENV APP_DEBUG false
+ENV LOG_CHANNEL stderr
 
-# Composer
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Directorio de trabajo
-WORKDIR /var/www/html
-
-# Copiar proyecto
-COPY --chown=www-data:www-data . .
-
-# Instalar dependencias
-RUN composer install --no-dev --optimize-autoloader
-
-# Permisos Laravel
-RUN chmod -R 775 storage bootstrap/cache
+CMD ["/start.sh"]
